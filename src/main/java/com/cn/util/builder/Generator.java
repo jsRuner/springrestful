@@ -26,7 +26,7 @@ import com.google.common.base.Strings;
 /**
  * @ClassName: Generator
  * @Description: [Model + Dao + Mapper + Service] - generator
- * @Author devfzm@gmail.com
+ * @Author hiwower@gmail.com
  * @Date 2016年6月18日 下午12:07:51
  */
 
@@ -118,8 +118,10 @@ public class Generator {
 				while (rs.next()) {
 					// 字段的其他参数
 					Map<String, String> params = new HashMap<String, String>();
+					
 					params.put("type", this.sqlType2JavaType(rs.getString(
-							"Type").replaceAll("[(].*[)]", "")));
+							"Type").replaceAll("[(].*", "")));
+
 					params.put("note", rs.getString("Comment"));
 					params.put("isPK",
 							rs.getString("Key").equals("PRI") ? "true"
@@ -164,9 +166,11 @@ public class Generator {
 			sb.append("package ");
 			sb.append(pkg);
 			sb.append(";\n\n");
+			
 
 			// extends
 			sb.append("import com.cn.base.BasicModel;\n\n");
+			sb.append("import java.util.Date;\n\n");
 
 			// utils
 			// ...
@@ -175,7 +179,7 @@ public class Generator {
 			sb.append("/**\n");
 			sb.append(" * @ClassName " + tableName + "\n");
 			sb.append(" * @Description TODO \n");
-			sb.append(" * @Author devfzm@gmail.com\n");
+			sb.append(" * @Author hiwower@gmail.com\n");
 			sb.append(" * @Date " + new Date() + "\n");
 			sb.append(" */\n\n");
 
@@ -294,7 +298,7 @@ public class Generator {
 			sb.append("/**\n");
 			sb.append(" * @ClassName " + tableName + "Mapper\n");
 			sb.append(" * @Description TODO \n");
-			sb.append(" * @Author devfzm@gmail.com\n");
+			sb.append(" * @Author hiwower@gmail.com\n");
 			sb.append(" * @Date " + new Date() + "\n");
 			sb.append(" */\n\n");
 
@@ -576,13 +580,13 @@ public class Generator {
 			String temp = "";
 
 			if ("Dao".equals(type)){
-				temp = "Dao.java";
+				temp = "Mapper.java";
 			}
 			if ("Mapper".equals(type)){
 				temp = "Mapper.xml";
 			}
 			if ("Model".equals(type)){
-				temp = "Model.java";
+				temp = ".java";
 			}
 			if ("Service".equals(type)){
 				temp = "Service.java";
