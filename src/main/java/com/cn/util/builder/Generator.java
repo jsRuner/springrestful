@@ -197,6 +197,8 @@ public class Generator {
 			// 保存所有属性字段，用于下面生成构造函数
 			List<String> attrs = new ArrayList<String>();
 			StringBuffer attrBuffer = new StringBuffer();
+
+			String att = "";
 			for (Entry<String, Object> entry : cols.entrySet()) {
 				JSONObject params = JSON.parseObject(JSON.toJSONString(entry
 						.getValue()));
@@ -208,15 +210,17 @@ public class Generator {
 				sb.append("\tprivate ");
 				sb.append(params.getString("type"));
 				sb.append(" ");
-				sb.append(entry.getKey());
+				att = this.toLowerCaseFirstOne(this.initcap(entry.getKey()));
+
+				sb.append(att);
 				sb.append(";\n");
 
 				// save
-				attrs.add(params.getString("type") + " " + entry.getKey());
+				attrs.add(params.getString("type") + " " + att);
 				attrBuffer.append("\t\tthis.");
-				attrBuffer.append(entry.getKey());
+				attrBuffer.append(att);
 				attrBuffer.append(" = ");
-				attrBuffer.append(entry.getKey());
+				attrBuffer.append(att);
 				attrBuffer.append(";\n");
 			}
 
@@ -247,7 +251,10 @@ public class Generator {
 				sb.append(this.initcap(entry.getKey()));
 				sb.append("() {\n");
 				sb.append("\t\treturn ");
-				sb.append(entry.getKey());
+
+                att = this.toLowerCaseFirstOne(this.initcap(entry.getKey()));
+
+				sb.append(att);
 				sb.append(";\n");
 				sb.append("\t}\n\n");
 
@@ -257,12 +264,12 @@ public class Generator {
 				sb.append("(");
 				sb.append(params.getString("type"));
 				sb.append(" ");
-				sb.append(entry.getKey());
+				sb.append(att);
 				sb.append(") {\n");
 				sb.append("\t\tthis.");
-				sb.append(entry.getKey());
+				sb.append(att);
 				sb.append(" = ");
-				sb.append(entry.getKey());
+				sb.append(att);
 				sb.append(";\n");
 				sb.append("\t}\n\n");
 			}
@@ -655,7 +662,8 @@ public class Generator {
 		if (!Strings.isNullOrEmpty(str)) {
 			char a = str.charAt(0);
 			String first = String.valueOf(a);
-			if (a >= 'a' && a <= 'z') {
+			//不在a与z之间则处理
+			if (a < 'a' || a > 'z') {
 				return str.replaceFirst(first, first.toLowerCase());
 			}
 		}
