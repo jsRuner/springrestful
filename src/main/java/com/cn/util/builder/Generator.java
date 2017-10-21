@@ -3,6 +3,7 @@ package com.cn.util.builder;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -54,8 +55,18 @@ public class Generator {
 	}
 
 	public Generator() {
-		String path = new File(this.getClass().getResource("").getPath())
-				+ "\\config.json";
+		String path = "/Users/ft521/Documents/study/项目/javaproject/springrestful/src/main/java/com/cn/util/builder/config.json";
+        //path无法正常读取。因为class编译后字节文件移动到了target中，而配置文件没有。
+		//        String path = "";
+//        try {
+//            path = Generator.class.getResource("/").toURI().getPath()
+//		String path = new File(this.getClass().getResource("").getPath())
+//                    + "config.json";
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+        System.out.println(path);
+
 		// 读取配置文件，并解析成JSON
 		config = JSON.parseObject(CommUtil.readFile(path));
 		// 获取连接
@@ -585,10 +596,15 @@ public class Generator {
 						"Unknown type, Optional parameters [\"Dao\", \"Mapper\", \"Model\", \"Service\", \"ServiceImpl\"]");
 			}
 
+			type = temp;
+
 
 			// 构建绝对路径
 			String path = new File("").getAbsolutePath()
-					+ "\\src\\main\\java\\" + pkg.replace(".", "\\") + "\\";
+					+ "/src/main/java/" + pkg.replace(".", "/") + "/";
+			System.out.println(path);
+//			exit();
+
 			File dir = new File(path);
 			// 目录检测
 			if (!dir.exists()) {

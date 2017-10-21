@@ -1,7 +1,7 @@
 {
 	"db": {
 		"driver": "com.mysql.jdbc.Driver",
-		"url": "jdbc:mysql://localhost:3306/imall?useUnicode=true&characterEncoding=UTF8&useSSL=false",
+		"url": "jdbc:mysql://localhost:3306/springrestful?useUnicode=true&characterEncoding=UTF8&useSSL=false",
 		"username": "root",
 		"password": "123456" 
 	},
@@ -13,5 +13,5 @@
 	"serviceImplPackage": "com.cn.service.impl",
 	
 	"redisCache": "com.cn.util.RedisCache",
-	"tables": "user"
+	"tables": "person,member"
 }
