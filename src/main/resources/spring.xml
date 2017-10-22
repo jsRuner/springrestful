@@ -80,4 +80,7 @@
 		<!-- 对切入点和事务的通知，进行适配 -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="interceptorPointCuts" />
 	</aop:config>
+
+	<!--开启验证-->
+	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
 </beans>

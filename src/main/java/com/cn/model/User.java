@@ -1,6 +1,7 @@
 package com.cn.model;
 
 import com.cn.base.BasicModel;
+import com.cn.validator.NotEmpty;
 
 /**
  * @ClassName User
@@ -14,7 +15,9 @@ public class User extends BasicModel {
 	private static final long serialVersionUID = 14660679132917L;
 	// 管理员编号
 	private Integer id;
+
 	// 管理员名称
+	@NotEmpty
 	private String name;
 	// 管理员账号
 	private String account;
