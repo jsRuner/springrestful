@@ -25,20 +25,19 @@
 <body>
 
 <!-- 在使用表单标签的时候需要获取到一个user模型数据，那我们不能直接访问页面（通过/user/add.abc访问），必须通过访问一次服务器，获取到一个user数据模型后才行，否则会出错 -->
-<form:form modelAttribute="user" action="user/test">
+<form:form modelAttribute="member" action="member/create">
     <!-- 输出所有的错误信息 -->
     <form:errors path="*" /><br/>
     <hr/>
 
     <!-- 输出单个错误信息 -->
-    <form:errors path="username" ></form:errors><br/>
-    用户名：<form:input path="username"/><br/>
+    <form:errors path="userName" ></form:errors><br/>
+    用户名：<form:input path="userName"/><br/>
 
     <form:errors path="password" ></form:errors><br/>
     密 码:<form:password path="password"/><br/>
 
-    <form:errors path="birthday" ></form:errors><br/>
-    生日：<form:input path="birthday"/><br/>
+
 
     <form:errors path="salary" ></form:errors><br/>
     工资：<form:input path="salary"/><br/>

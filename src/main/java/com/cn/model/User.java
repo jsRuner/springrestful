@@ -3,6 +3,9 @@ package com.cn.model;
 import com.cn.base.BasicModel;
 import com.cn.validator.NotEmpty;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * @ClassName User
  * @Description TODO 
@@ -17,9 +20,12 @@ public class User extends BasicModel {
 	private Integer id;
 
 	// 管理员名称
+//	@NotEmpty(message = "管理员名称不能为空")
 	@NotEmpty
 	private String name;
 	// 管理员账号
+	@NotNull
+	@Size(min=2,max = 5)
 	private String account;
 	// 管理员密码
 	private String password;

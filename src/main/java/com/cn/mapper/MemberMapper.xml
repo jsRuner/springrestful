@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.dao.MemberMapper">
+	<!-- use cache -->
+ 	<cache eviction="LRU" type="com.cn.util.RedisCache" />
+
+	<!-- ============================= SELECT ============================= -->
+	<select id="findByPrimaryKey" parameterType="java.lang.Integer" resultType="Member">
+		SELECT * FROM `member`
+		WHERE id=#{id}
+	</select>
+
+	<select id="findOne" parameterType="Member" resultType="Member">
+		SELECT * FROM `member` WHERE 1=1
+		<if test="id != null">
+			AND id=#{id}
+		</if>
+		<if test="user_name != null">
+			AND user_name=#{user_name}
+		</if>
+		<if test="salary != null">
+			AND salary=#{salary}
+		</if>
+		<if test="password != null">
+			AND password=#{password}
+		</if>
+		<if test="phone != null">
+			AND phone=#{phone}
+		</if>
+		LIMIT 1
+	</select>
+
+	<select id="find" parameterType="Member" resultType="Member">
+		SELECT * FROM `member` WHERE 1=1
+		<if test="id != null">
+			AND id=#{id}
+		</if>
+		<if test="user_name != null">
+			AND user_name=#{user_name}
+		</if>
+		<if test="salary != null">
+			AND salary=#{salary}
+		</if>
+		<if test="password != null">
+			AND password=#{password}
+		</if>
+		<if test="phone != null">
+			AND phone=#{phone}
+		</if>
+	</select>
+
+	<select id="findAll" resultType="Member">
+		SELECT * FROM `member`
+	</select>
+
+	<select id="count" resultType="java.lang.Long">
+		SELECT COUNT(1) FROM `member`
+	</select>
+
+	<!-- ============================= INSERT ============================= -->
+	<insert id="save" parameterType="Member" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `member` (id, user_name, salary, password, phone)
+		VALUES(#{id}, #{user_name}, #{salary}, #{password}, #{phone})
+	</insert>
+
+	<!-- ============================= UPDATE ============================= -->
+	<update id="update" parameterType="Member" useGeneratedKeys="true" keyProperty="id">
+		UPDATE `member`
+		<set>
+			<if test="user_name != null">
+				user_name=#{user_name},
+			</if>
+			<if test="salary != null">
+				salary=#{salary},
+			</if>
+			<if test="password != null">
+				password=#{password},
+			</if>
+			<if test="phone != null">
+				phone=#{phone}
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!-- ============================= DELETE ============================= -->
+	<delete id="delete">
+		DELETE FROM `member`
+		WHERE id=#{id}
+	</delete>
+
+</mapper>

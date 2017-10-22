@@ -13,5 +13,5 @@
 	"serviceImplPackage": "com.cn.service.impl",
 	
 	"redisCache": "com.cn.util.RedisCache",
-	"tables": "person,member"
+	"tables": "member"
 }

@@ -2,21 +2,24 @@ package com.cn.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import com.cn.model.Person;
 import com.cn.result.Response;
-import com.cn.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 
 import com.cn.base.BasicController;
 import com.cn.model.User;
 import com.cn.service.UserService;
-import com.cn.util.CommUtil;
 import com.cn.util.RedisUtil;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 import javax.validation.Valid;
 
@@ -34,8 +37,7 @@ public class UserController extends BasicController {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private PersonService personService;
+
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/{userid}/show", method = RequestMethod.GET)
@@ -52,8 +54,6 @@ public class UserController extends BasicController {
 		// 首先从redis缓存中取数据，如果取不到，再查询数据库，这里是直接使用mybatis缓存配置，也可自行封装调用
 		List<User> users = (List<User>) userService.findAll();
 
-		List<Person> persons = (List<Person>) personService.findAll();
-		logger.info(persons);
 
         throw new HttpRequestMethodNotSupportedException("post");
 
@@ -69,9 +69,45 @@ public class UserController extends BasicController {
 	 * @throws
 	 */
 	@RequestMapping("/test")
-	public Response commitTest(@RequestBody @Valid User user) {
+	public Response commitTest(@RequestBody @Valid User user,Errors errors) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		// 模拟数据，进行事务测试
+
+
+		logger.info(errors);
+
+        if (errors.hasErrors()) {
+
+            List<ObjectError> allErrors = errors.getAllErrors();
+            List<FieldError> allFiledErrors = errors.getFieldErrors();
+
+            //获取对应的对象
+            for (ObjectError oe: allErrors
+                 ) {
+                logger.info(oe.getObjectName());
+                logger.info(oe.getDefaultMessage());
+                logger.info(oe.getCode());
+                logger.info(oe.getArguments());
+            }
+
+            //获取具体的字段
+            for (FieldError fe: allFiledErrors
+                    ) {
+                logger.info(fe.getField());
+                logger.info(fe.getDefaultMessage());
+                logger.info(fe.getRejectedValue());
+                logger.info(fe.getArguments());
+            }
+            // get all errors
+            String tmp = errors.getAllErrors()
+                    .stream()
+                    .map(x -> x.getDefaultMessage())
+                    .collect(Collectors.joining(","));
+
+            return new Response().failure(tmp);
+
+        }
+
+        // 模拟数据，进行事务测试
 //		User test = new User();
 //		test.setAccount(CommUtil.randomUUID());
 //

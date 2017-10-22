@@ -17,6 +17,14 @@
 	<!-- <mvc:annotation-driven /> 是一种简写形式, 会自动注册DefaultAnnotationHandlerMapping与 
 		AnnotationMethodHandlerAdapter 两个bean, 是spring MVC为@Controllers分发请求所必须的 -->
 	<mvc:annotation-driven />
+	<bean id="messageSource"
+		  class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages</value>
+			</list>
+		</property>
+	</bean>
 
 	<!--使Spring支持自动检测组件，如注解的Controller -->
 	<context:component-scan base-package="com.cn.controller" />
@@ -55,5 +63,13 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+
+
+	<!--&lt;!&ndash; 基于Cookie的本地化解析器 &ndash;&gt;-->
+	<!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">-->
+		<!--<property name="cookieMaxAge" value="604800"/>-->
+		<!--<property name="defaultLocale" value="zh_CN"/>-->
+		<!--<property name="cookieName" value="Language"></property>-->
+	<!--</bean>-->
 
 </beans>  

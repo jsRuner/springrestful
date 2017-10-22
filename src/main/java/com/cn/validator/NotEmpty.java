@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = NotEmptyValidator.class)
 public @interface NotEmpty {
 
-    String message() default "not_empty";
+    String message() default "NOT_EMPTY";
 
     Class<?>[] groups() default {};
 
